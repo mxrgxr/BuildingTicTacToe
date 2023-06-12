@@ -44,3 +44,9 @@ function init(){
     render();
 }
 
+function renderBoard(){
+    board.forEach(function(sqVal, idx){
+        const squareCell = document.getElementById(`sq${idx}`);
+        squareCell.style.backgroundColor = colors[sqVal];
+    });
+};
