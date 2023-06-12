@@ -74,3 +74,12 @@ function playerChoice(evt) {
     winner = getWinner();
     render();
 };
+
+function getWinner() {
+    for (let i=0; i< winningCombinations.length; i++){
+        if (Math.abs(board[winningCombinations[i][0]] + board[winningCombinations[i][1]] + board[winningCombinations[i][2]]) === 3)
+        return board[winningCombinations[i][0]];
+    }
+    if (board.includes(null)) return null;
+    return 'T';
+}
