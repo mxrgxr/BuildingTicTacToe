@@ -19,6 +19,9 @@ let board;
 let turn;
 let winner;
 
+const messageEl = document.querySelector('h1');
+const resetButton = document.querySelector('button');
+
 init();
 
 function render(){
