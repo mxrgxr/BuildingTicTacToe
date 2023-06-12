@@ -50,3 +50,13 @@ function renderBoard(){
         squareCell.style.backgroundColor = colors[sqVal];
     });
 };
+
+function renderMessage(){
+    if (winner === 'T') {
+        messageEl.innerText = "Tied";
+    } else if (winner) {
+        messageEl.innerHTML = `<span style="color: ${colors[winner]}">${colors[winner].toUpperCase()}</span> is the winner!`;
+    } else {
+        messageEl.innerHTML = `<span style="color: ${colors[turn]}">${colors[turn].toUpperCase()}</span>'s turn`;
+    };
+};
