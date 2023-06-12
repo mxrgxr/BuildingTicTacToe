@@ -22,6 +22,9 @@ let winner;
 const messageEl = document.querySelector('h1');
 const resetButton = document.querySelector('button');
 
+document.getElementById('board').addEventListener('click', playerChoice);
+resetButton.addEventListener('click', init);
+
 init();
 
 function render(){
