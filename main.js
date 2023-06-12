@@ -1,3 +1,8 @@
+const colors = {
+    null: 'white',
+    '1': 'blue',
+    '-1': 'green'
+}
 
 let board;
 let turn;
