@@ -60,3 +60,17 @@ function renderMessage(){
         messageEl.innerHTML = `<span style="color: ${colors[turn]}">${colors[turn].toUpperCase()}</span>'s turn`;
     };
 };
+
+function playerChoice(evt) {
+    const target = evt.target;
+    const cells = Array.from(document.querySelectorAll('#board > div'));
+    const idx = cells.indexOf(target);
+    if (
+        winner || board[idx] || typeof(idx) !== 'number'
+    )
+    return;
+    board[idx] = turn;
+    turn *= -1;
+    winner = getWinner();
+    render();
+};
