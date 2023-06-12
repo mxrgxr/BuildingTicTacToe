@@ -2,7 +2,7 @@ const colors = {
     null: 'white',
     '1': 'blue',
     '-1': 'green'
-}
+};
 
 const winningCombinations = [
     [0, 1, 2],
@@ -13,7 +13,7 @@ const winningCombinations = [
     [2, 5, 8],
     [2, 4, 6],
     [0, 4, 8]
-]
+];
 
 let board;
 let turn;
@@ -27,59 +27,69 @@ resetButton.addEventListener('click', init);
 
 init();
 
-function render(){
+function render() {
     renderBoard();
     renderMessage();
     resetButton.disabled = !winner;
-  };
+}
 
-function init(){
+function init() {
     board = [
-        [null, null , null],
-        [null, null , null],
-        [null, null , null],
+        [null, null, null],
+        [null, null, null],
+        [null, null, null]
     ];
     turn = 1;
     winner = null;
     render();
 }
 
-function renderBoard(){
-    board.forEach(function(sqVal, idx){
-        const squareCell = document.getElementById(`sq${idx}`);
-        squareCell.style.backgroundColor = colors[sqVal];
+function renderBoard() {
+    board.forEach(function(row, rowIndex) {
+      row.forEach(function(cell, colIndex) {
+        const squareCell = document.getElementById(`sq${rowIndex * 3 + colIndex}`);
+        squareCell.style.backgroundColor = colors.null;
+        squareCell.innerHTML = cell === 1 ? `<span class="symbol player1">X</span>` : cell === -1 ? `<span class="symbol player2">O</span>` : '';
+      });
     });
-};
+  }
 
-function renderMessage(){
+function renderMessage() {
     if (winner === 'T') {
         messageEl.innerText = "Tied";
     } else if (winner) {
         messageEl.innerHTML = `<span style="color: ${colors[winner]}">${colors[winner].toUpperCase()}</span> is the winner!`;
     } else {
         messageEl.innerHTML = `<span style="color: ${colors[turn]}">${colors[turn].toUpperCase()}</span>'s turn`;
-    };
-};
+    }
+}
 
 function playerChoice(evt) {
     const target = evt.target;
     const cells = Array.from(document.querySelectorAll('#board > div'));
     const idx = cells.indexOf(target);
-    if (
-        winner || board[idx] || typeof(idx) !== 'number'
-    )
-    return;
-    board[idx] = turn;
+    if (winner || board[Math.floor(idx / 3)][idx % 3] || typeof idx !== 'number') {
+        return;
+    }
+    board[Math.floor(idx / 3)][idx % 3] = turn;
     turn *= -1;
     winner = getWinner();
     render();
-};
+}
 
 function getWinner() {
-    for (let i=0; i< winningCombinations.length; i++){
-        if (Math.abs(board[winningCombinations[i][0]] + board[winningCombinations[i][1]] + board[winningCombinations[i][2]]) === 3)
-        return board[winningCombinations[i][0]];
+    for (const combination of winningCombinations) {
+        const [a, b, c] = combination;
+        if (
+            board[Math.floor(a / 3)][a % 3] &&
+            board[Math.floor(a / 3)][a % 3] === board[Math.floor(b / 3)][b % 3] &&
+            board[Math.floor(a / 3)][a % 3] === board[Math.floor(c / 3)][c % 3]
+        ) {
+            return board[Math.floor(a / 3)][a % 3];
+        }
     }
-    if (board.includes(null)) return null;
+    if (board.flat().includes(null)) {
+        return null;
+    }
     return 'T';
 }

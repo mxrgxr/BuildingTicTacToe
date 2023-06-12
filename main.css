@@ -55,3 +55,20 @@ button {
 #board > div {
     border: 0.5vmin solid darkgray;
   }
+
+  .symbol {
+    font-size: 10vmin;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .symbol.player1 {
+    color: blue;
+  }
+  
+  .symbol.player2 {
+    color: green;
+  }
